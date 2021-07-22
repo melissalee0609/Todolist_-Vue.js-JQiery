@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Todo 範例製作</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="images/favicon.ico" rel="shortcut icon">
+    <meta charset="UTF-8">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/solid.js" integrity="sha384-+Ga2s7YBbhOD6nie0DzrZpJes+b2K1xkpKxTFFcx59QmVPaSA8c7pycsNaFwUK6l" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/regular.js" integrity="sha384-t7yHmUlwFrLxHXNLstawVRBMeSLcXTbQ5hsd0ifzwGtN7ZF7RZ8ppM7Ldinuoiif" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/fontawesome.js" integrity="sha384-7ox8Q2yzO/uWircfojVuCQOZl+ZZBg2D2J5nkpLqzH1HY0C1dHlTKIbpRz/LG23c" crossorigin="anonymous"></script> 
+
+  </head>
+  
+  <body class="bg-lighter">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <a class="navbar-brand" href="/">Vue.js 練習手冊</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="/basic/dev.html">基礎教學</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/template/basic.html">模板指令</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/components/basic.html">組件</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/api/vue_set.html">常用 API</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/es6/let_const.html">ES6</a>
+      </li>
+      
+    </ul>
+  </div>
+</nav>
+    <div class="container my-5">
+      <div class="row">
+        
+          <div class="col-md-3">
+            
+<div>
+  <h6 class="text-capitalize text-muted">basic</h6>
+  
+    
+      <a href="/basic/dev.html"  class="btn btn-block btn-link">
+        Vue 的開發環境
+      </a>
+    
+  
+    
+      <a href="/basic/instant.html"  class="btn btn-block btn-link">
+        建立 Vue 的應用程式
+      </a>
+    
+  
+    
+      <a href="/basic/mvvm.html"  class="btn btn-block btn-link">
+        MVVM 是什麼樣的概念
+      </a>
+    
+  
+    
+      <a href="/basic/directive.html"  class="btn btn-block btn-link">
+        指令
+      </a>
+    
+  
+    
+      <a href="/basic/if_for.html"  class="btn btn-block btn-link">
+        模板語法的延伸 v-if 及 v-for
+      </a>
+    
+  
+    
+      <a href="/basic/v_on.html"  class="btn btn-block btn-link">
+        處理互動式行為 v-on 指令
+      </a>
+    
+  
+    
+      <a href="/basic/defined_var.html"  class="btn btn-block btn-link">
+        預先定義資料結構
+      </a>
+    
+  
+    
+      <a href="/basic/modifiers.html"  class="btn btn-block btn-link">
+        修飾符 與 縮寫
+      </a>
+    
+  
+    
+      <a href="/basic/v_class.html"  class="btn btn-block btn-link">
+        切換 Class
+      </a>
+    
+  
+    
+      <a href="/basic/computed.html"  class="btn btn-block btn-link">
+        計算屬性
+      </a>
+    
+  
+    
+      <a href="/basic/form.html"  class="btn btn-block btn-link">
+        表單雙向綁定
+      </a>
+    
+  
+    
+      <a href="/basic/components.html"  class="btn btn-block btn-link">
+        元件化
+      </a>
+    
+  
+    
+      <a href="/basic/todo.html"  class="btn btn-block btn-primary active">
+        Todo 範例練習
+      </a>
+    
+  
+    
+      <a href="/basic/v_lifecycle.html"  class="btn btn-block btn-link">
+        延伸介紹 - Vue 生命週期
+      </a>
+    
+  
+</div>
+          </div>
+        
+        <div class="col-md-9 post">      
+          <!-- 練習開始 -->
+          
+
+
+<div id="app">
+    <template>
+        <div class="dir">
+         <!-- 按鈕，特別注意@click.stop用於禁止消息冒泡-->
+         <span title="排序" id="sort_by" @click.stop="onSortClick()" class="icons">按鈕</span><br/>
+         <!-- 菜單v-show設置變量showSortmenu，style的內容要一開始就寫上！
+        此處不確定是否是個BUG，不初始style時顯示不正確
+        -->
+         <ul class="menu" id="sort_by_menu" v-show="showSortmenu" style="display: block;">
+          <li sort="title">
+           <span>標題</span>
+          </li>
+          <li sort="lastModify">
+           <span>最後修改時間</span>
+          </li>
+          <li sort="free">
+           <span>自定義排序</span>
+          </li>
+         </ul>
+        </div>
+       </template>
+</div>
+
+<script>
+    export default {
+     name: "demo2",
+     data() {
+      return {
+       showSortmenu: false
+      };
+     },
+     props: {},
+     methods: {
+      //接收按鈕點擊事件@click.stop，禁止冒泡
+      onSortClick: function() {
+       //設置bool值， 
+       this.showSortmenu = !this.showSortmenu;
+       //要特別注意這裡，只有菜單顯示的時候才會監聽全局點擊事件
+       //並且，要設置為：vue的方法，不能扔到export代碼段外面去。
+       //要切記`this`這個變量對應的實例是誰
+       if (this.showSortmenu) {
+        document.addEventListener("click", this.onGlobalClick);
+       }
+      },
+      //全局監聽點擊事件
+      onGlobalClick(e) {
+       //判斷全局被點中的控件的className，不同就是菜單外點擊
+       if (e.target.className != "sort_by_menu") {
+        this.showSortmenu = false;
+        //這裡要注意啊!!!!一定要記得移除監聽事件！！！！！
+        document.removeEventListener("click", this.onGlobalClick);
+       }
+      }
+     },
+     mounted() {},
+     
+    };
+    </script>
+
+ 
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
